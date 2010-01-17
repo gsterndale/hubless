@@ -1,6 +1,10 @@
 require File.dirname(__FILE__) + '/gem_description'
 
+
+
 class Hubless
+  class GemInstallError < StandardError; end
+  
   @@io = $stdout
   @@timeout = 1
   
@@ -55,14 +59,16 @@ class Hubless
     self.gems.each {|g| @@io.puts(g.install_cmd) if g.github? && g.gemcutter? }
   end
 
-  # def self.reinstall_gems
-  #   self.gems.each do |g|
-  #     if g.github? && g.gemcutter?
-  #       @@io.puts %x(#{g.uninstall_cmd})
-  #       @@io.puts %x(#{g.install_cmd})
-  #     end
-  #   end
-  # end
+  def install_gems
+    @@io.puts("\nInstalling gems:")
+    self.gems.each do |g|
+      if g.github? && g.gemcutter?
+        cmd = g.install_cmd
+        @@io.puts cmd
+        raise GemInstallError unless Kernel.system(cmd)
+      end
+    end
+  end
 
 protected
 
@@ -71,5 +77,3 @@ protected
   end
 
 end
-
-# Hubless.local_gems_on_github.each{|g| puts g.inspect }
