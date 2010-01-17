@@ -5,11 +5,12 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "hubless"
-    gem.summary = %Q{Install gems from gemcutter instead of github}
-    gem.description = %Q{Install gems from gemcutter instead of github}
+    gem.summary = %Q{Search your local gem repository for gems installed from GitHub that have since moved to Gemcutter}
+    gem.description = %Q{Search your local gem repository for gems installed from GitHub that have since moved to Gemcutter}
     gem.email = "greg@plectix.com"
     gem.homepage = "http://github.com/gsterndale/hubless"
-    gem.authors = ["Greg"]
+    gem.authors = ["Greg Sterndale"]
+    gem.add_development_dependency "mocha", ">= 0.9.1"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
