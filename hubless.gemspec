@@ -10,8 +10,10 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Greg Sterndale"]
   s.date = %q{2010-01-17}
-  s.description = %q{Install gems from gemcutter instead of github}
+  s.default_executable = %q{hubless}
+  s.description = %q{Search your local gem repository for gems installed from GitHub that have since moved to Gemcutter}
   s.email = %q{greg@plectix.com}
+  s.executables = ["hubless"]
   s.extra_rdoc_files = [
     "LICENSE",
      "README.rdoc"
@@ -23,10 +25,13 @@ Gem::Specification.new do |s|
      "README.rdoc",
      "Rakefile",
      "VERSION",
-     "hubless.rb",
+     "bin/hubless",
+     "hubless.gemspec",
+     "lib/application.rb",
      "lib/gem_description.rb",
      "lib/hubless.rb",
      "test/helper.rb",
+     "test/test_application.rb",
      "test/test_gem_description.rb",
      "test/test_hubless.rb"
   ]
@@ -34,9 +39,10 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.5}
-  s.summary = %q{Install gems from gemcutter instead of github}
+  s.summary = %q{Search your local gem repository for gems installed from GitHub that have since moved to Gemcutter}
   s.test_files = [
     "test/helper.rb",
+     "test/test_application.rb",
      "test/test_gem_description.rb",
      "test/test_hubless.rb"
   ]
