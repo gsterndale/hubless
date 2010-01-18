@@ -4,7 +4,7 @@ Search your local gem repository for gems installed from GitHub that have since 
 
 ## Command line usage
 
-	$ hubless
+	$ hubless [-i|-h]
 
 ## Sample output
 
