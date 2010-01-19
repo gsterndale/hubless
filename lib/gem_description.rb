@@ -11,7 +11,7 @@ class Hubless
 
     # GemDescriptions of all gems installed locally
     def self.local_gems
-      @@local_gems ||= Gem.cache.map {|g| new(g.first) }.sort!{|x,y| y.name <=> x.name }
+      @@local_gems ||= Gem.cache.map {|g| new(g.first) }.sort!{|x,y| x.name <=> y.name }
     end
 
     # New GemDescription from a one-liner or options Hash
