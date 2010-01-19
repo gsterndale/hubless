@@ -66,9 +66,9 @@ class TestHubless < Test::Unit::TestCase
 
   def test_uninstall_instructions
     local_gems = [
-        mock(:uninstall_cmd => 'foo', :github? => true, :gemcutter? => true),
-        mock(:uninstall_cmd => 'bar', :github? => true, :gemcutter? => true),
-        mock(:uninstall_cmd => 'abc', :github? => true, :gemcutter? => true),
+        mock(:uninstall_cmd => 'foo', :github? => true, :gemcutter? => true, :blacklisted? => false),
+        mock(:uninstall_cmd => 'bar', :github? => true, :gemcutter? => true, :blacklisted? => false),
+        mock(:github? => true, :gemcutter? => true, :blacklisted? => true),
         mock(:github? => true, :gemcutter? => false),
         mock(:github? => false)
       ]
@@ -76,16 +76,15 @@ class TestHubless < Test::Unit::TestCase
     @io.expects(:puts).with{|s| s =~ /To uninstall these GitHub gems run:/ }
     @io.expects(:puts).once.with{|s| s =~ /foo/ }
     @io.expects(:puts).once.with{|s| s =~ /bar/ }
-    @io.expects(:puts).once.with{|s| s =~ /abc/ }
     hubless = Hubless.new
     hubless.uninstall_instructions
   end
 
   def test_install_instructions
     local_gems = [
-        mock(:install_cmd => 'foo', :github? => true, :gemcutter? => true),
-        mock(:install_cmd => 'bar', :github? => true, :gemcutter? => true),
-        mock(:install_cmd => 'abc', :github? => true, :gemcutter? => true),
+        mock(:install_cmd => 'foo', :github? => true, :gemcutter? => true, :blacklisted? => false),
+        mock(:install_cmd => 'bar', :github? => true, :gemcutter? => true, :blacklisted? => false),
+        mock(:github? => true, :gemcutter? => true, :blacklisted? => true),
         mock(:github? => true, :gemcutter? => false),
         mock(:github? => false)
       ]
@@ -93,16 +92,15 @@ class TestHubless < Test::Unit::TestCase
     @io.expects(:puts).with{|s| s =~ /To reinstall these gems from Gemcutter run:/ }
     @io.expects(:puts).once.with{|s| s =~ /foo/ }
     @io.expects(:puts).once.with{|s| s =~ /bar/ }
-    @io.expects(:puts).once.with{|s| s =~ /abc/ }
     hubless = Hubless.new
     hubless.install_instructions
   end
 
   def test_install_gems
     local_gems = [
-        mock(:install_cmd => 'foo', :github? => true, :gemcutter? => true),
-        mock(:install_cmd => 'bar', :github? => true, :gemcutter? => true),
-        mock(:install_cmd => 'abc', :github? => true, :gemcutter? => true),
+        mock(:install_cmd => 'foo', :github? => true, :gemcutter? => true, :blacklisted? => false),
+        mock(:install_cmd => 'bar', :github? => true, :gemcutter? => true, :blacklisted? => false),
+        mock(:github? => true, :gemcutter? => true, :blacklisted? => true),
         mock(:github? => true, :gemcutter? => false),
         mock(:github? => false)
       ]
@@ -110,15 +108,13 @@ class TestHubless < Test::Unit::TestCase
     @io.expects(:puts).with{|s| s =~ /Installing gems:/ }
     @io.expects(:puts).once.with{|s| s =~ /foo/ }
     @io.expects(:puts).once.with{|s| s =~ /bar/ }
-    @io.expects(:puts).once.with{|s| s =~ /abc/ }
     Kernel.expects(:system).once.with{|s| s =~ /foo/ }.returns(true)
     Kernel.expects(:system).once.with{|s| s =~ /bar/ }.returns(true)
-    Kernel.expects(:system).once.with{|s| s =~ /abc/ }.returns(true)
     hubless = Hubless.new
     hubless.install_gems
     
     local_gems = [
-        mock(:install_cmd => 'foo', :github? => true, :gemcutter? => true)
+        mock(:install_cmd => 'foo', :github? => true, :gemcutter? => true, :blacklisted? => false)
       ]
     Hubless::GemDescription.expects(:local_gems).once.returns(local_gems)
     @io.expects(:puts).with{|s| s =~ /Installing gems:/ }

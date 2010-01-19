@@ -51,18 +51,18 @@ class Hubless
 
   def uninstall_instructions
     @@io.puts("\nTo uninstall these GitHub gems run:")
-    self.gems.each {|g| @@io.puts(g.uninstall_cmd) if g.github? && g.gemcutter? }
+    self.gems.each {|g| @@io.puts(g.uninstall_cmd) if g.github? && g.gemcutter? && !g.blacklisted? }
   end
 
   def install_instructions
     @@io.puts("\nTo reinstall these gems from Gemcutter run:")
-    self.gems.each {|g| @@io.puts(g.install_cmd) if g.github? && g.gemcutter? }
+    self.gems.each {|g| @@io.puts(g.install_cmd) if g.github? && g.gemcutter? && !g.blacklisted? }
   end
 
   def install_gems
     @@io.puts("\nInstalling gems:")
     self.gems.each do |g|
-      if g.github? && g.gemcutter?
+      if g.github? && g.gemcutter? && !g.blacklisted?
         cmd = g.install_cmd
         @@io.puts cmd
         raise GemInstallError unless Kernel.system(cmd)

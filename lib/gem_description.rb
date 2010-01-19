@@ -6,6 +6,8 @@ class Hubless
 
   class GemDescription
 
+    BLACKLIST = File.join(File.dirname(__FILE__), '..', 'BLACKLIST.yml')
+
     attr_reader :name
     attr_accessor :version
 
@@ -31,6 +33,11 @@ class Hubless
     def name=(str)
       self.clear
       @name = str
+    end
+
+    # Does this name appear on the blacklist
+    def blacklisted?
+      ! self.class.blacklist.detect{|b| /\A#{b}\Z/i =~ self.name }.nil?
     end
 
     # Does a repo exist on GitHub that matches this gem
@@ -82,6 +89,10 @@ class Hubless
     end
 
   protected
+
+    def self.blacklist
+      @@blacklist ||= YAML.load_file(BLACKLIST)
+    end
 
     def clear
       @is_gemcutter = @is_github = nil

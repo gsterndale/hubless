@@ -43,6 +43,19 @@ class TestGemDescription < Test::Unit::TestCase
     assert_equal name, gem_description.name
   end
 
+  def test_blacklisted?
+    legit_name    = 'my-github_and_gemcutter_gem'
+    illigit_name1 = 'github-exploit'
+    illigit_name2 = '.*-ruby'
+    YAML.expects(:load_file).once.with(Hubless::GemDescription::BLACKLIST).returns([illigit_name1, illigit_name2])
+    legit_gem_description    = Hubless::GemDescription.new(:name => legit_name)
+    illigit_gem1_description = Hubless::GemDescription.new(:name => illigit_name1)
+    illigit_gem2_description = Hubless::GemDescription.new(:name => 'foo-ruby')
+    assert ! legit_gem_description.blacklisted?
+    assert illigit_gem1_description.blacklisted?
+    assert illigit_gem2_description.blacklisted?
+  end
+
   def test_github_name
     user = 'my'
     repo = 'github_and_gemcutter_gem'
