@@ -2,3 +2,5 @@
 - sqlite3-ruby
 - libxml-ruby
 - .*-ruby
+- ruby-.*
+- cucumber-rails
